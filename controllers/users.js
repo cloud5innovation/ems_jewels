@@ -1,5 +1,4 @@
 const Users = require('../models/users');
-
 //404 Not Found
 //400 Bad request 
 //TODO: ADD BEST PRACTICES FOR ERROR HANDLING
@@ -15,8 +14,11 @@ exports.getUsers = async (req, res) => {
     try {
         const UserData = await Users.users();
         res.status(200).json(UserData);
+        console.log(UserData )
+
     } catch (err) {
         res.status(500).json(`No users found`);
+
     }
 };
 
@@ -71,7 +73,8 @@ exports.addUser = async (req, res) => {
             res.status(400).json(`Please enter all input fields`);
         } else {
             const newUser = await Users.addUser(user);
-            res.status(201).json(newUser);
+            res.status(201).json(`Welcome ${user.first_name}`);
+            // console.log(user.first_name)
         }
     } catch(err) {
         res.status(500).json(`There was an error adding you information`);
