@@ -24,6 +24,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "faker": "^4.1.0",
+    "firebase-admin": "^8.9.2",
     "fs": "^0.0.1-security",
     "helmet": "^3.21.3",
     "knex": "^0.20.10",
