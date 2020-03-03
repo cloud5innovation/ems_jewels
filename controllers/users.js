@@ -13,9 +13,11 @@ const Users = require('../models/users');
 exports.getUsers = async (req, res) => {
     try {
         const UserData = await Users.users();
-        res.status(200).json(UserData);
-        console.log(UserData )
 
+        res.status(200).json(UserData)
+        // console.log(res)
+
+        
     } catch (err) {
         res.status(500).json(`No users found`);
 
@@ -81,3 +83,16 @@ exports.addUser = async (req, res) => {
         console.log(`error from addUser: ${err}`)
     }
 };
+
+exports.registerOrLogin = async (req, res, next) => {
+    try {
+      console.log("Test")
+      const { email} = req.body
+      const firebase_id = req.body.uid
+    //   console.log("req dot user: ", req.user);
+      const registeredUser = await Users.registerOrLogin({ firebase_id, email });
+      res.status(201).json(registeredUser);
+    } catch (error) {
+      console.log(error);
+    }
+  };
