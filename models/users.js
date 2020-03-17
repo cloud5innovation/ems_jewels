@@ -1,7 +1,17 @@
 const db = require('./../dbconfig');
 
 users = () => {
-    return db('users').select('firebase_id', 'email', 'first_name', 'last_name')
+    return db('users').select(
+      'firebase_id', 
+      'email', 
+      'first_name', 
+      'last_name', 
+      'address',
+      'city',
+      'state',
+      'zip',
+      'phone'
+      )
 };
 
 // userById = (firebase_id) => {

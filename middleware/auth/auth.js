@@ -1,23 +1,55 @@
 const admin = require("firebase-admin");
-const client = admin.initializeApp();
+admin.initializeApp({
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID
+}
+ 
+);
 
-module.exports = (req, res, next) => {
-  const token = req.headers.authorization;
-  if (token) {
-    client
-      .auth()
-      .verifyIdToken(token)
-      .then(decodedToken => {
-        req.user = decodedToken.uid;
-        return next();
-      })
-      .catch(err => {
-        // console.error("Error while verifying Firebase Id token:", err);
-        res.status(403).send("Unauthorized");
-      });
-  } else {
-    res
-      .status(401)
-      .json({ message: "Log in and provide token to view this content." });
-  }
+const auth = (req, res, next) => {
+  const idToken = req.headers.authorization;
+  console.log('idtoken', idToken)
+     // verify:
+     if (idToken) {
+        // verify:
+        admin
+          .auth()
+          .verifyIdToken(idToken)
+          .then(decodedIdToken => {
+            // verify ok
+            // console.log("ID Token correctly decoded", decodedIdToken);
+            req.user = decodedIdToken;
+            return next();
+          })
+          .catch(error => {
+            console.error("Error while verifying Firebase ID token:", error);
+            res.status(403).send("Unauthorized");
+          });
+      } else {
+        res.status(401).json({
+          message: "Log in and provide token to view this content."
+        });
+
 };
+}
+// async function verifyIdToken(req, res, next) {
+//     const idToken = req.headers.authorization;
+//     try {
+//         const decodedToken = await admin.auth.verifyIdToken(idToken)
+//         if(decodedToken) {
+//             req.body.uid = decodedToken.uid;
+
+//             return next();
+//         } else {
+//            return res.status(401).send('Ypu are not Authorized')
+//         }
+//     } catch (e) {
+//         return res.status(401).send('not authorized')
+//     }
+// }
+module.exports = auth

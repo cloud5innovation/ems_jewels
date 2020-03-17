@@ -5,10 +5,10 @@ localPg = {
   host: 'localhost',
   database: process.env.DATABASE,
   user: 'postgres',
-  password: process.env.DATABASE_PASSWORD
+  password: process.env.DATABASE_PASSWORD,
+  database_url: process.env.DATABASE_URL
   //password: 'password'
 }
-
 
 const productionDbConnection = process.env.DATABASE_URL || localPg;
 module.exports = {

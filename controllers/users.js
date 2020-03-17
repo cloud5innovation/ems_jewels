@@ -1,4 +1,5 @@
 const Users = require('../models/users');
+const Cart = require('./../models/cart');
 //404 Not Found
 //400 Bad request 
 //TODO: ADD BEST PRACTICES FOR ERROR HANDLING
@@ -70,15 +71,18 @@ exports.deleteUser = async (req, res) => {
 // //TODO: ADD BETTER ERROR HANDLING, WILL NEED TO CHECK IF USER EXISTS FIRST
 exports.addUser = async (req, res) => {
     try {
-        const user = req.body;
-        if (!user) {
+        
+        const {email, firebase_id, first_name, last_name, address, city, state, zip, phone} = req.body;
+        console.log(req.body, 'req.body for register')
+        if (!email || !firebase_id || !first_name || !last_name || !address || !city || !state || !zip || !phone  ) {
             res.status(400).json(`Please enter all input fields`);
         } else {
-            const newUser = await Users.addUser(user);
-            res.status(201).json(`Welcome ${user.first_name}`);
-            // console.log(user.first_name)
-        }
-    } catch(err) {
+            const newUser = await Users.addUser(req.body);
+            const cart = await Cart.addCart(firebase_id)
+            res.status(201).json(newUser);
+            console.log(newUser)
+        // }
+    } }catch(err) {
         res.status(500).json(`There was an error adding you information`);
         console.log(`error from addUser: ${err}`)
     }
@@ -87,10 +91,10 @@ exports.addUser = async (req, res) => {
 exports.registerOrLogin = async (req, res, next) => {
     try {
       console.log("Test")
-      const { email} = req.body
+      const {user} = req.body
       const firebase_id = req.body.uid
     //   console.log("req dot user: ", req.user);
-      const registeredUser = await Users.registerOrLogin({ firebase_id, email });
+      const registeredUser = await Users.registerOrLogin( user);
       res.status(201).json(registeredUser);
     } catch (error) {
       console.log(error);

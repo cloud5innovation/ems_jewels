@@ -41,21 +41,41 @@ exports.seed = function(knex, Promise) {
           'email': 'hokage7@theleaf.com',
           'first_name': 'Naruto',
           'last_name': 'Uzumaki',
+          'address': '123 Main Street',
+          'city': 'Chicago',
+          'state': 'Illinoise',
+          'zip': '12345',
+          'phone': '123-321-3322'
         }, {
           'firebase_id': '34rweafrt32452awrerfaew',
           'email': 'tsunade_sama@leaf.com',
           'first_name': 'Tsunade',
           'last_name': 'Senju',
+          'address': '123 Main Street',
+          'city': 'Chicago',
+          'state': 'Illinoise',
+          'zip': '12345',
+          'phone': '123-321-3322'
         }, {
           'firebase_id': '2435rwteray756ue5y5etrg',
           'email': 'kakashi@leaf.com',
           'first_name': 'Kakashi',
           'last_name': 'Hatake',
+          'address': '123 Main Street',
+          'city': 'Chicago',
+          'state': 'Illinoise',
+          'zip': '12345',
+          'phone': '123-321-3322'
         },  {
           'firebase_id': '2435rwteray756ue566ttuyyy',
           'email': 'hiruzen_sarutobi@leaf.com',
           'first_name': 'Hiruzen',
           'last_name': 'Sarutobi',
+          'address': '123 Main Street',
+          'city': 'Chicago',
+          'state': 'Illinoise',
+          'zip': '12345',
+          'phone': '123-321-3322'
         }
       ]);
     });
