@@ -22,7 +22,7 @@ const auth = (req, res, next) => {
           .verifyIdToken(idToken)
           .then(decodedIdToken => {
             // verify ok
-            // console.log("ID Token correctly decoded", decodedIdToken);
+            console.log("ID Token correctly decoded", decodedIdToken);
             req.user = decodedIdToken;
             return next();
           })

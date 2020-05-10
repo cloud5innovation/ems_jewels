@@ -28,26 +28,36 @@ getCart = id => {
       .where({ firebase_id: id });
   };
 
-  getCartItems = id => {
+getCartItems = id => {
     return db("cart_item")
-      .innerJoin("stall", "cart_item.stalls_id", "stall.id")
-      .innerJoin("market", "stall.market_id", "market.firebase_id")
+      .innerJoin("products", "cart_item.products_id", "products.id")
       .innerJoin("cart", "cart_item.cart_id", "cart.firebase_id")
       .select([
         "cart_item.id",
-        "stalls_id",
-        "stall.price",
-        "stall.size",
-        "stall.market_id",
+        "products_id",
+        "products.title",
+        "products.description",
+        "products.price",
+        "products.image_url",
         "cart.firebase_id",
-        "cart.id",
-        "market.stripeAccountId",
-        "market.market_name",
+        "cart.id"
       ])
       .where({ cart_id: id });
+  };
+
+  addToCart = (products_id, cart_id) => {
+    let addedItem = {
+      products_id,
+      cart_id
+    };
+  
+    console.log("added item", addedItem);
+    return db("cart_item").insert(addedItem);
   };
   module.exports = {
       getCartById,
       addCart,
-      getCart
+      getCart,
+      addToCart,
+      getCartItems
   }
