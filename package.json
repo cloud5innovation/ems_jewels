@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "E-commerce store for Emily's jewelry store",
   "main": "index.js",
+  "engines": {
+    "node": "12.16.1"
+  },
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",

@@ -3,14 +3,14 @@ require('dotenv').config()
 
 localPg = {
   host: 'localhost',
-  database: process.env.DATABASE,
+  database: process.env.LOCAL_DATABASE,
   user: 'postgres',
-  password: process.env.DATABASE_PASSWORD,
-  database_url: process.env.DATABASE_URL
+  password: process.env.LOCAL_DATABASE_PASSWORD,
+  database_url: process.env.LOCAL_DATABASE_URL
   //password: 'password'
 }
 
-const productionDbConnection = process.env.DATABASE_URL || localPg;
+const productionDbConnection = process.env.LOCAL_DATABASE_URL || localPg;
 module.exports = {
 
   development: {
@@ -40,19 +40,19 @@ module.exports = {
     }
   },
 
-  // production: {
-  //   client: 'postgresql',
-  //   connection: process.env.DATABASE_URL,
-  //   pool: {
-  //     min: 2,
-  //     max: 10
-  //   },
-  //   migrations: {
-  //     directory: './database/migrations'
-  //   },
-  //   seeds: {
-  //     directory: './database/seeds'
-  //   },
-  // }
+  production: {
+    client: 'postgresql',
+    connection: process.env.DATABASE_URL,
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      directory: './database/migrations'
+    },
+    seeds: {
+      directory: './database/seeds'
+    },
+  }
 
 };
