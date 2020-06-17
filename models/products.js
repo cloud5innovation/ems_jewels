@@ -1,7 +1,7 @@
 const db = require('../dbconfig.js');
 
 products = () => {
-    return db('products').select('id', 'title', 'price', 'description', 'image_url')
+    return db('products').select('id', 'title', 'price', 'description', 'image_url', 'category')
 };
 
 productById = (id) => {
@@ -20,10 +20,17 @@ deleteProduct = (id) => {
     return db('products').where({ id }).del()
 }
 
+filterBy = (col, filter) => {
+    // let items  = {
+    //     col, filter
+    // }
+    return db('products').where(`${col}`, filter)
+}
 module.exports = {
     products,
     productById,
     addProduct,
     editProduct,
-    deleteProduct
+    deleteProduct,
+    filterBy
 }

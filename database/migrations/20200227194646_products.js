@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
       product.string('description', 450);
       product.float('price');
       product.string('image_url', 250);
+      product.string('category');
     });
   };
   

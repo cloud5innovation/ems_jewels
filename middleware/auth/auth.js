@@ -36,20 +36,46 @@ const auth = (req, res, next) => {
         });
 
 };
-}
-// async function verifyIdToken(req, res, next) {
-//     const idToken = req.headers.authorization;
-//     try {
-//         const decodedToken = await admin.auth.verifyIdToken(idToken)
-//         if(decodedToken) {
-//             req.body.uid = decodedToken.uid;
+};
 
-//             return next();
-//         } else {
-//            return res.status(401).send('Ypu are not Authorized')
-//         }
-//     } catch (e) {
-//         return res.status(401).send('not authorized')
-//     }
-// }
-module.exports = auth
+async function checkadmin (req, res, next) {
+  try {
+    const idToken = req.headers.authorization;
+    console.log(idToken)
+    if (idToken) {
+       // verify:
+       admin
+         .auth()
+         .verifyIdToken(idToken)
+         .then(decodedIdToken => {
+           // verify ok
+           const uid = decodedIdToken.uid;
+           console.log("backend uid", uid)
+
+          Users.userById(uid).then(user => {
+            if (user.admin === true) {
+              console.log("backend user", user)
+             return next();
+            } else {
+              res.status(403).json({message: "You must be an admin to access this route"})
+            }
+          })
+         
+         })
+         .catch(error => {
+           console.error("Error while verifying Firebase ID token:", error);
+           res.status(403).send("Unauthorized");
+         });
+     } else {
+       res.status(401).json({
+         message: "Log in and provide token to view this content."
+       });
+};
+  } catch(err) {
+    res.status(500).json({message: "Error while checking users role: ", err})
+  }
+};
+module.exports = {
+  auth,
+  checkadmin,
+}

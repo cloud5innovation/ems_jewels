@@ -10,7 +10,8 @@ users = () => {
       'city',
       'state',
       'zip',
-      'phone'
+      'phone',
+      'admin',
       )
 };
 
@@ -66,5 +67,6 @@ module.exports = {
     addUser,
     editUser,
     deleteUser,
-    registerOrLogin
+    registerOrLogin,
+   
 }

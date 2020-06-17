@@ -10,6 +10,7 @@ const app = express();
 
 const usersRoutes = require('./routes/users');
 const productsRoutes = require('./routes/products');
+const adminRoutes = require('./routes/admin');
 
 const accessLogStream = fs.createWriteStream( //writting morgan logs to file
     path.join(__dirname, 'access.log'),
@@ -32,6 +33,7 @@ app.use(function(req, res, next) {
 
 app.use('/', usersRoutes);
 app.use('/products', productsRoutes);
+app.use('/admin', adminRoutes);
 
 app.get('/', (req, res) => {
     res.send('sanity check!')
